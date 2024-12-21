@@ -36,7 +36,7 @@ Below is a breakdown of the repository structure and a brief description of each
 
 ## How to Navigate the Repository
 Each folder contains:
-- A README file providing an overview of the assignment.
+- A text document providing an overview of the assignment.
 - Source code, datasets, and any necessary files to reproduce the work.
 - Insights and conclusions derived from the analysis or project.
 
@@ -48,4 +48,4 @@ Each folder contains:
 - Web scraping and geospatial data analysis
 
 ## Contact
-For questions or collaboration opportunities, feel free to reach out via [your email or LinkedIn profile].
+For questions or collaboration opportunities, feel free to reach out via https://www.linkedin.com/in/dawson-martin-jones-62548a341/.
