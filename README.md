@@ -48,4 +48,6 @@ Each folder contains:
 - Web scraping and geospatial data analysis
 
 ## Contact
-For questions or collaboration opportunities, feel free to reach out via [your email or LinkedIn profile].
+For questions or collaboration opportunities, feel free to reach out via my email below.
+
+email: martinjonesdawson@gmail.com
