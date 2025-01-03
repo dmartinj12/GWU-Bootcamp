@@ -8,7 +8,7 @@ The goal of this project is to predict the credit risk of loan applicants by cla
 
 The dataset used for this project is lending_data.csv, which contains various features related to applicants, such as their credit history, loan amount, income, and more. The target variable, loan_status, indicates whether a loan is healthy (0) or high-risk (1).
 
-**Model Approach**
+## Model Approach
 
 The following steps were undertaken:
 
