@@ -1,109 +1,86 @@
-# Python-Challenge
+# VBA-Challenge
 
-This repository contains Python scripts designed to solve two challenges: **PyBank** and **PyPoll**. These tasks apply Python programming skills to real-world scenarios, focusing on data analysis and automation. The goal is to use Python to process large datasets, analyze trends, and produce meaningful insights efficiently.
+This repository contains a VBA-based solution designed to automate the analysis of stock market data across multiple quarters. By leveraging VBA scripting, the goal is to extract key performance metrics from stock data to identify trends, calculate changes, and provide insights into stock performance.
 
 ---
 
 ## Overview
 
-### PyBank
-**Objective**: Analyze the financial records of a company using the dataset `budget_data.csv`.  
-The script generates the following financial insights:
-- Total number of months included in the dataset.
-- Net total profit/losses over the entire period.
-- Changes in profit/losses over the period and the average of those changes.
-- The greatest increase in profits (date and amount).
-- The greatest decrease in profits (date and amount).
+The analysis focuses on stock data for each quarter and generates the following metrics for each stock:
 
-### PyPoll
-**Objective**: Analyze election poll data using the dataset `election_data.csv`.  
-The script calculates:
-- Total number of votes cast.
-- List of candidates who received votes.
-- Percentage of votes each candidate won.
-- Total votes each candidate received.
-- The winner of the election based on popular vote.
+- **Ticker Symbol**  
+- **Quarterly Price Change** (open to close)  
+- **Percentage Change** (open to close)  
+- **Total Stock Volume**
+
+Additionally, the analysis highlights:  
+- The stock with the **greatest percentage increase**  
+- The stock with the **greatest percentage decrease**  
+- The stock with the **greatest total volume**
 
 ---
 
-## Files
+## Key Features
 
-### PyBank
-- **`main.py`**: Python script for analyzing financial records.
-- **`budget_data.csv`**: Dataset containing financial records (Date, Profit/Losses).
-- **`analysis/pybank_analysis.txt`**: Results of the financial analysis.
+### 1. **Data Retrieval**
+The script processes each stock row for each quarter and extracts the following data:
+- **Ticker Symbol** – The identifier for the stock.  
+- **Volume** – The total trading volume for that stock.  
+- **Open Price** – The stock price at the beginning of the quarter.  
+- **Close Price** – The stock price at the end of the quarter.  
 
-### PyPoll
-- **`main.py`**: Python script for analyzing election data.
-- **`election_data.csv`**: Dataset containing election results (Voter ID, County, Candidate).
-- **`analysis/pypoll_analysis.txt`**: Results of the election analysis.
+### 2. **Metrics Generation**
+For each stock, the script calculates:
+- **Quarterly Change** – The difference between the open price at the start of the quarter and the close price at the end.  
+- **Percentage Change** – The percentage change from the open to the close price.  
+- **Total Volume** – The total trading volume for that stock over the quarter.  
+
+### 3. **Conditional Formatting**
+To enhance the readability of the results, conditional formatting is applied:
+- **Quarterly Change**: Positive changes are highlighted in green, while negative changes are highlighted in red.  
+- **Percentage Change**: Similarly, positive changes are marked in green and negative ones in red.  
+
+### 4. **Performance Insights**
+The script also identifies and outputs:  
+- **Greatest Percentage Increase** – The stock with the highest percentage increase during the quarter.  
+- **Greatest Percentage Decrease** – The stock with the largest percentage decrease.  
+- **Greatest Total Volume** – The stock with the highest total volume during the quarter.  
+
+### 5. **Multi-Sheet Functionality**
+The VBA script is designed to run across all worksheets in the workbook, each representing data from a different quarter. This allows for seamless analysis of multiple quarters of data at once.
 
 ---
 
 ## Instructions for Use
 
-1. **Set Up Repository**:
-   - Clone the repository and ensure the following structure:
-     ```
-     python-challenge/
-     ├── PyBank/
-     │   ├── main.py
-     │   ├── budget_data.csv
-     │   └── analysis/
-     │       └── pybank_analysis.txt
-     ├── PyPoll/
-     │   ├── main.py
-     │   ├── election_data.csv
-     │   └── analysis/
-     │       └── pypoll_analysis.txt
-     ```
+1. **Set Up Repository**  
+   Clone the repository and download the relevant stock data files.  
 
-2. **Run the Scripts**:
-   - Run `main.py` in the **PyBank** folder to analyze financial data.
-   - Run `main.py` in the **PyPoll** folder to analyze election data.
+2. **Run VBA Script**  
+   Execute the VBA script in Excel to analyze the stock data. The script will process each quarter's data and generate the desired metrics.  
 
-3. **Review Results**:
-   - Each script prints results to the terminal and exports them to a text file in the `analysis` folder.
+3. **Review Results**  
+   The results will be displayed in a structured format with appropriate conditional formatting applied to the quarterly and percentage change columns.  
+
+4. **Analyze Insights**  
+   Based on the output, review the stocks with the highest increases, decreases, and volumes to identify key trends or opportunities.  
 
 ---
 
-## Features
+## Files
 
-### PyBank
-- Reads and processes financial data from a CSV file.
-- Calculates key financial metrics:
-  - Total months, net profit/loss, average changes in profits/losses.
-  - Greatest increase and decrease in profits (with dates).
-- Exports results to a text file.
-
-### PyPoll
-- Reads and processes election data from a CSV file.
-- Computes:
-  - Total votes cast, vote percentages, and total votes for each candidate.
-  - Identifies the election winner based on the popular vote.
-- Exports results to a text file.
+- **VBA Script**: Contains the code for analyzing the data and generating the metrics.  
+- **Stock Data**: Contains quarterly stock data that the script processes.  
+- **Output**: The results will be displayed in the same Excel workbook or a new sheet with the calculated metrics.  
 
 ---
 
-## Example Output
+## Conclusion
 
-### PyBank
+This VBA-based solution automates the analysis of stock data, helping identify performance trends and making it easier to track stock movements across multiple quarters. The ability to run this script across various sheets makes it efficient for handling large datasets, and the added insights—such as the greatest percentage increase, decrease, and volume—provide useful information for making data-driven decisions.
 
-**Financial Analysis**  
-----------------------------
-- **Total Months**: 86  
-- **Total**: $22,564,198  
-- **Average Change**: $-8,311.11  
-- **Greatest Increase in Profits**: Aug-16 ($1,862,002)  
-- **Greatest Decrease in Profits**: Feb-14 ($-1,825,558)  
+---
 
-#### PyPoll
+## License
 
-**Election Results**  
-----------------------------
-- **Total Votes**: 369,711  
-- Charles Casper Stockham: 23.049% (85,213)  
-- Diana DeGette: 73.812% (272,892)  
-- Raymon Anthony Doane: 3.139% (11,606)  
-----------------------------
-- **Winner**: Diana DeGette
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
