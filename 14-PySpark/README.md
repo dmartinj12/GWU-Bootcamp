@@ -1,61 +1,70 @@
-Home Sales Analysis: Project Overview and Approach
-This project involves leveraging PySpark SQL to analyze a home sales dataset and perform various queries to determine patterns and insights based on multiple filters such as home features (bedrooms, bathrooms, square footage) and other variables like view ratings, year built, and more. The main goal is to process the data using PySpark, perform computations on a large dataset efficiently, and evaluate how caching, partitioning, and various performance optimizations impact query runtime.
+# Home Sales Analysis: Project Overview and Approach
 
-1. Repository Setup
-Purpose: This project focuses on analyzing home sales data using PySpark, so we set up a clean repository dedicated to this task. We clone the repository, ensuring all work is properly versioned and easily accessible for future enhancements or evaluations.
+This project utilizes **PySpark SQL** to analyze a home sales dataset, running various queries to uncover trends and insights. By focusing on features such as home attributes (bedrooms, bathrooms, square footage) and other variables like view ratings, year built, and more, the aim is to process large datasets efficiently, examining the impact of performance optimizations such as **caching**, **partitioning**, and other runtime optimizations.
 
-2. Data Loading and Initial Setup
-Spark Session: To begin the project, we set up a Spark session, which is essential for any PySpark-related tasks. This enables us to interact with Spark and execute SQL queries.
+## 1. Repository Setup
 
-Data Import: The home_sales_revised.csv dataset is loaded into a Spark DataFrame. This step converts the raw CSV file into a structured DataFrame, making it ready for SQL-style querying. The DataFrame is then registered as a temporary table called home_sales, allowing us to use SQL queries on it seamlessly.
+### Purpose:
+The goal of this project is to analyze home sales data using **PySpark**, so a dedicated repository is created to ensure clean version control and organized future development. Cloning this repository allows for better version tracking and easier enhancements.
 
-3. SQL Queries for Insights
-Query 1: Average Price of a Four-Bedroom House per Year
-Objective: This query focuses on filtering homes with exactly four bedrooms and computes the average price of these homes for each year they were sold.
+## 2. Data Loading and Initial Setup
 
-Analysis: We're looking for trends in how the prices of four-bedroom homes have changed over the years. The use of the GROUP BY clause helps us break down the data by the year the home was sold, giving insight into price fluctuations.
+### Spark Session:
+To begin, a **Spark session** is established, which is essential for interacting with Spark and executing SQL queries effectively.
 
-Query 2: Average Price for Homes with Specific Features (Three Bedrooms, Three Bathrooms)
-Objective: This query narrows the filter to homes with exactly three bedrooms and three bathrooms, and computes the average price for each year the home was built.
+### Data Import:
+The dataset, `home_sales_revised.csv`, is loaded into a **Spark DataFrame**. This conversion allows us to work with structured data, making it ready for SQL-style querying. The DataFrame is registered as a temporary table called `home_sales`, enabling seamless SQL operations.
 
-Analysis: By comparing the average prices of homes with consistent features over time, this query provides insights into how the market values homes with these attributes.
+## 3. SQL Queries for Insights
 
-Query 3: Homes with Three Bedrooms, Three Bathrooms, Two Floors, and ≥2000 Square Feet
-Objective: Here, we add more criteria: homes must have at least three bedrooms, three bathrooms, two floors, and be greater than or equal to 2,000 square feet.
+### Query 1: Average Price of a Four-Bedroom House per Year
+- **Objective**: Filter homes with exactly four bedrooms and compute their average price for each year sold.
+- **Analysis**: We track price fluctuations over the years, using **GROUP BY** to break down the data by sale year and understand pricing trends for four-bedroom homes.
 
-Analysis: This refined filter allows us to identify a specific subset of homes and assess how they perform in terms of average price based on their construction year. It’s particularly useful for understanding market dynamics for larger homes over time.
+### Query 2: Average Price for Homes with Three Bedrooms and Three Bathrooms
+- **Objective**: Focus on homes with exactly three bedrooms and three bathrooms, calculating the average price for each year built.
+- **Analysis**: This query provides insight into how the market values homes with consistent features, looking at price trends over time.
 
-Query 4: Average Price per View Rating for Homes with Average Price ≥ $350,000
-Objective: This query examines homes with an average price greater than or equal to $350,000 and calculates the average price per "view" rating.
+### Query 3: Homes with Three Bedrooms, Three Bathrooms, Two Floors, and ≥ 2000 Square Feet
+- **Objective**: Apply a more specific filter—homes with at least three bedrooms, three bathrooms, two floors, and ≥ 2000 square feet.
+- **Analysis**: The goal is to understand the market performance of larger homes over time, filtering based on construction year and other characteristics.
 
-Analysis: By segmenting homes by their view rating, we are exploring whether there’s any correlation between the view quality and price for higher-end homes. The runtime of this query is also measured to evaluate how long it takes to execute.
+### Query 4: Average Price per View Rating for Homes with Average Price ≥ $350,000
+- **Objective**: Focus on homes priced above $350,000 and calculate the average price based on view ratings.
+- **Analysis**: This query segments the data by view ratings, exploring whether higher-end homes correlate with better views. The runtime of this query is also measured to assess performance.
 
-4. Performance Optimization with Caching and Partitioning
-Caching the home_sales Table
-Purpose: Caching improves the performance of repeated queries. By caching the temporary home_sales table, we ensure that Spark keeps the DataFrame in memory after the first computation, avoiding the overhead of reading the data again on subsequent queries.
+## 4. Performance Optimization with Caching and Partitioning
 
-Validation: To ensure caching is effective, we check if the home_sales table is indeed cached, ensuring better performance for further queries.
+### Caching the `home_sales` Table:
+- **Purpose**: Caching improves query performance by storing intermediate data in memory. This is especially beneficial for repeated queries, as it avoids re-reading the dataset for every query.
 
-Evaluating Cache Impact on Query Performance
-Objective: We run the expensive query (Query 4) both before and after caching the home_sales table. The runtime difference gives us insight into the performance gain from caching, which is essential when working with large datasets.
-Partitioning the Data by date_built
-Purpose: Partitioning the data ensures that Spark organizes the data by specific fields, such as date_built. This can improve query performance by reducing the amount of data that Spark needs to scan when performing operations that involve these columns.
+- **Validation**: To ensure caching is effective, we confirm that the `home_sales` table is cached, leading to faster query execution for subsequent analyses.
 
-Temporary Table for Parquet Data: The partitioned data is saved in Parquet format and loaded back into a temporary table for further analysis. This format and partitioning allow us to efficiently query the data.
+### Evaluating Cache Impact on Query Performance:
+- **Objective**: Run an expensive query (e.g., Query 4) both before and after caching the `home_sales` table. By comparing runtimes, we can assess the performance improvement from caching.
 
-Impact on Performance: By comparing the query runtime before and after partitioning, we assess how partitioning the data by date_built impacts the speed of our queries, especially for large datasets.
+### Partitioning the Data by `date_built`:
+- **Purpose**: Partitioning organizes data by specific fields, such as `date_built`, to optimize query performance by reducing the volume of data Spark needs to scan.
 
-5. Uncaching and Final Validation
-Uncaching: Once performance optimizations like caching and partitioning are applied, we uncache the home_sales temporary table. This ensures that the data is not stored in memory, allowing us to verify that the table has indeed been uncached properly.
+- **Temporary Table for Parquet Data**: The partitioned data is saved in Parquet format and loaded into a temporary table for further analysis. This allows for more efficient querying.
 
-Validation: We verify that the table is no longer cached using PySpark’s caching methods, ensuring that the system is functioning as expected.
+- **Impact on Performance**: By comparing query performance before and after partitioning by `date_built`, we evaluate the performance improvements for large datasets.
 
-Performance Considerations
-By running these queries and evaluating the performance impact of caching, partitioning, and different query optimizations, we gain a deeper understanding of how to efficiently analyze large datasets. This exercise demonstrates that:
+## 5. Uncaching and Final Validation
 
-Caching can significantly reduce query time for repeated analyses.
-Partitioning by key fields can improve query performance for specific types of analyses.
-Proper data organization and optimization strategies are essential when working with big data.
+### Uncaching:
+Once optimizations like caching and partitioning are applied, the `home_sales` table is uncached to ensure it is not stored in memory. This allows us to validate the uncaching process and confirm proper system functionality.
 
-Conclusion:
-This project demonstrates practical techniques for handling and analyzing large datasets using PySpark. By leveraging SQL queries, performance optimization techniques like caching and partitioning, and evaluating runtime performance, we not only gain insights into the home sales data but also improve our skills in managing data at scale. The exercises also highlight the importance of efficient data handling and the trade-offs between computation and memory usage when working with big data.
+### Validation:
+We verify that the table is no longer cached using PySpark’s caching methods, ensuring that the system is functioning as expected.
+
+## 6. Performance Considerations
+
+By running these queries and evaluating the performance impact of caching, partitioning, and query optimizations, we gain deeper insights into how to efficiently analyze large datasets. This exercise demonstrates that:
+- Caching significantly reduces query time for repeated analyses.
+- Partitioning by key fields improves query performance for specific analyses.
+- Efficient data organization and optimization strategies are crucial when working with big data.
+
+## 7. Conclusion
+
+This project demonstrates practical techniques for handling and analyzing large datasets using **PySpark**. By leveraging SQL queries, performance optimization techniques like caching and partitioning, and evaluating runtime performance, we not only gain insights into the home sales data but also enhance our skills in managing data at scale. The exercises highlight the importance of efficient data handling and the trade-offs between computation and memory usage when working with big data.
