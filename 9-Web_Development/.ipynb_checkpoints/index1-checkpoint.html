@@ -1,14 +1,10 @@
-// Fetch data from the provided JSON file
-d3.json("samples.json").then(function(data) {
-  console.log(data); // Log the entire data for debugging
+d3.json("https://static.bc-edx.com/data/dl-1-2/m14/lms/starter/samples.json").then(function(data) {
+  console.log(data);
 
-  // Extract and log key parts of the dataset
-  let names = data.names;       // Store and log IDs (sample names)
-  console.log(names);
-  let metadata = data.metadata; // Store and log metadata information
-  console.log(metadata);
-  let samples = data.samples;   // Store and log sample data
-  console.log(samples);
+  // Extract key data
+  let names = data.names; // Sample names (IDs)
+  let metadata = data.metadata; // Metadata information
+  let samples = data.samples; // Sample data
 
   // Populate the dropdown menu with sample IDs
   let dropdown = d3.select("#selDataset");
@@ -16,18 +12,9 @@ d3.json("samples.json").then(function(data) {
     dropdown.append("option").text(id).property("value", id);
   });
 
-  // Set up the default view for the first subject (ID 940)
-  updateChartsAndInfo(names[0]);
-
-  // Event listener for dropdown menu changes
-  d3.selectAll("#selDataset").on("change", function() {
-    let selectedId = dropdown.property("value"); // Get the selected ID
-    updateChartsAndInfo(selectedId); // Update charts and info dynamically
-  });
-
-  // Function to update bar chart, bubble chart, and demographic info
+  // Function to update bar chart and demographic info
   function updateChartsAndInfo(selectedId) {
-    // Find the selected sample data and metadata
+    // Find the selected sample data
     let selectedSample = samples.find(sample => sample.id == selectedId);
     let selectedMetadata = metadata.find(meta => meta.id == selectedId);
 
@@ -62,26 +49,14 @@ d3.json("samples.json").then(function(data) {
       xaxis: { title: { text: "Number of Bacteria" } }
     };
     Plotly.newPlot("bar", barData, barLayout); // Re-render the bar chart
-
-    // Update bubble chart
-    let bubbleTrace = {
-      x: selectedSample.otu_ids,
-      y: selectedSample.sample_values,
-      mode: "markers",
-      marker: {
-        size: selectedSample.sample_values,
-        color: selectedSample.otu_ids,
-        colorscale: "Viridis"
-      },
-      type: "scatter"
-    };
-    let bubbleData = [bubbleTrace];
-    let bubbleLayout = {
-      title: "Bacteria Cultures per Sample",
-      xaxis: { title: { text: "OTU ID" } },
-      yaxis: { title: { text: "Number of Bacteria" } }
-    };
-    Plotly.newPlot("bubble", bubbleData, bubbleLayout); // Re-render the bubble chart
   }
 
+  // Set up the default view for the first subject
+  updateChartsAndInfo(names[0]);
+
+  // Event listener for dropdown menu changes
+  d3.selectAll("#selDataset").on("change", function() {
+    let selectedId = dropdown.property("value"); // Get the selected ID
+    updateChartsAndInfo(selectedId); // Update charts and info dynamically
+  });
 });
